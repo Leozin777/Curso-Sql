@@ -44,3 +44,30 @@ UPDATE videos SET author=1 WHERE id_video=4;
 UPDATE videos SET author=2 WHERE id_video=5;
 
 SELECT * FROM videos JOIN author ON videos.fk_author = author.id_author;
+
+
+/*Criei uma table SEO*/
+CREATE TABLE `dio_mysql`.`seo` (`id_seo` INT NOT NULL AUTO_INCREMENT , `category` VARCHAR(30) NOT NULL , PRIMARY KEY (`id_seo`)) ENGINE = InnoDB;
+
+INSERT INTO videos(fk_author, title, likes, dislikes) VALUES(2,'PHP', 15, 3);
+
+INSERT INTO seo(category) VALUES('front-end');
+INSERT INTO seo(category) VALUES('back-end');
+
+ALTER TABLE `videos` ADD `fk_seo` INT NOT NULL AFTER `title`;
+
+UPDATE videos SET fk_seo=1 WHERE id_video=1;
+UPDATE videos SET fk_seo=1 WHERE id_video=2;
+UPDATE videos SET fk_seo=1 WHERE id_video=3;
+UPDATE videos SET fk_seo=2 WHERE id_video=4;
+UPDATE videos SET fk_seo=2 WHERE id_video=5;
+UPDATE videos SET fk_seo=2 WHERE id_video=6;
+
+ALTER TABLE `videos` ADD CONSTRAINT `fk_seo` FOREIGN KEY (`fk_seo`) REFERENCES `seo`(`id_seo`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE `dio_mysql`.`playlist` (`id_playlist` INT NOT NULL AUTO_INCREMENT , `name_pl` VARCHAR(30) NOT NULL , PRIMARY KEY (`id_playlist`)) ENGINE = InnoDB;
+INSERT INTO playlist(name_pl) VALUES('HTML + CSS');
+INSERT INTO playlist(name_pl) VALUES('HTML + PHP + JS');
+INSERT INTO playlist(name_pl) VALUES('PYTHON + PHP');
+
+CREATE TABLE `dio_mysql`.`videos_playlist` (`id_vp` INT NOT NULL AUTO_INCREMENT , `fk_videos` INT NOT NULL , `fk_playlist` INT NOT NULL , PRIMARY KEY (`id_vp`)) ENGINE = InnoDB;
